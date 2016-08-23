@@ -1,8 +1,8 @@
-import _ from 'lodash';
 let config = require('config');
 let Promise = require('bluebird');
 
 import Koa from'koa';
+// Router for koa v2
 import Router from 'koa-66';
 
 let log = require('logfilename')(__filename);
@@ -22,10 +22,16 @@ export default function(app) {
     baseRouter(){
       return baseRouter;
     },
+    /**
+     * 初始化路由表
+     */
     mountRootRouter(){
       rootRouter.mount('/api/v1', baseRouter);
       koaApp.use(rootRouter.routes());
     },
+    /**
+     * 打印路由表
+     */
     diplayRoutes(){
       rootRouter.stacks.forEach(function(stack){
         log.debug(`${stack.methods} : ${stack.path}`);
@@ -66,39 +72,19 @@ export default function(app) {
   };
 };
 
-function middlewareInit(app, koaApp, config) {
+function middlewareInit(app, koaApp, configParam) {
   log.debug("middlewareInit");
-  const convert = require('koa-convert');
 
-  //TODO create SessionMiddlware
-  const session = require('koa-generic-session');
-  const redisStore = require('koa-redis');
-  //TODO use secret from config
-  koaApp.keys = ['your-super-session-secret'];
-  const redisConfig = config.redis;
-  if(app.store.client()){
-    log.debug("middlewareInit use redis ", redisConfig);
-    koaApp.use(convert(session({
-      store: redisStore(app.store.client())
-    })));
-  } else {
-    log.debug("middlewareInit memory session ");
-    koaApp.use(convert(session()));
-  }
+  // SessionMiddlware
+  require('./middleware/SessionMiddlware')(app, koaApp, configParam);
 
+  // a body parser for koa, base on co-body
   const bodyParser = require('koa-bodyparser');
   koaApp.use(bodyParser());
 
-  //TODO create LoggerMiddlware
-  koaApp.use(async(ctx, next) => {
-    const start = new Date;
-    log.debug(`${ctx.method} ${ctx.url} begins`);
-    log.debug(`${JSON.stringify(ctx.header, 4, null)}`);
-    await next();
-    const ms = new Date - start;
-    log.debug(`${ctx.method} ${ctx.url} ends in ${ms}ms, code: ${ctx.status}`);
-  });
+  //LoggerMiddlware
+  require('./middleware/LoggerMiddleware')(app, koaApp, configParam);
 
   //Serve static html files such as the generated api documentation.
-  require('./middleware/StaticMiddleware')(app, koaApp, config);
+  require('./middleware/StaticMiddleware')(app, koaApp, configParam);
 }

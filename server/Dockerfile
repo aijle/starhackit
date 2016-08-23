@@ -1,12 +1,12 @@
-FROM node:4
+FROM node:latest
 
 RUN mkdir /app
-
+VOLUME /app
 WORKDIR /app
-ADD package.json /app/package.json
-RUN npm install -g gulp
+
+COPY package.json /app/package.json
+RUN npm install gulp -g
 RUN npm install --loglevel warn
+EXPOSE 8000
 
-EXPOSE 3000
-
-CMD npm start
+CMD ["npm", "start"]

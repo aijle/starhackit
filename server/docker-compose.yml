@@ -1,13 +1,14 @@
 web:
   build: ./
   volumes:
-    - ".:/app"
-  expose:
-    - "3000"
+    - "~/starhackit/server:/app_source"
+  ports:
+    - "9000:9000"
   links:
     - "rabbitmq"
     - "postgres"
-  command: npm start
+    - "redis"
+  command: bash -c "cp -r /app_source /app && npm start"
 
 postgres:
   image: postgres
@@ -17,3 +18,5 @@ rabbitmq:
   image: rabbitmq
   expose:
     - "5672"
+redis:
+  image: redis

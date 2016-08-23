@@ -3,6 +3,7 @@
   {
     "name": "api",
     "script": "build/index.js",
-    "watch": false
+    "watch": false,
+    "node_args": ["--debug"]
   }]
 }

@@ -53,7 +53,7 @@ To download and install the dependencies set in [package.json](package.json):
 [Webpack](https://webpack.github.io/) has become the defacto standard for building React frontend, it is configured through 3 files:
 
 * [webpack.config.js](webpack.config.js): the configuration common to all environment.
-* [webpack.dev.js](webpack.dev.js): the configuration for development environment. Thanks to the Webpack plugin `OpenBrowserPlugin`, a new browser page will be opened at the right URL i.e: `http://localhost:8080`
+* [webpack.dev.js](webpack.dev.js): the configuration for development environment. Thanks to the Webpack plugin `OpenBrowserPlugin`, a new browser page will be opened at the right URL i.e: `http://localhost:8000`
 * [webpack.prod.js](webpack.prod.js): the configuration for production environment. The `DedupePlugin`, `UglifyJsPlugin` and the `CompressionPlugin` plugins are invoked to respectively remove code duplication, obfuscate and compress the code.
 
 To run the development web server:

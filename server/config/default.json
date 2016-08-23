@@ -1,5 +1,5 @@
 {
-  "websiteUrl": "http://localhost:8080",
+  "websiteUrl": "http://localhost:8000",
   "log": {
     "console": {
       "level": "debug",
@@ -7,8 +7,11 @@
       "colorize": true
     }
   },
+  "redis":{
+    "url": "redis://redis:6379"
+  },
   "rabbitmq": {
-    "url":"amqp://localhost"
+    "url":"amqp://rabbitmq"
   },
   "frontend": {
     "path": "../client/build"
@@ -17,14 +20,12 @@
     "port": 9000
   },
   "db":{
-     // pg, sqlite3  etc ...
-    "driver": "sqlite3",
-    // postgres, sqlite
-    "dialect":"sqlite",
+    "driver": "pg",
+    "dialect":"postgres",
     "database": "dev",
-    "user": "user",
-    "password": "password",
-    "host": "localhost",
+    "user": "postgres",
+    "password": "",
+    "host": "postgres",
     "port": "5432",
     "logging": true,
     "storage": "./db.dev.sqlite",

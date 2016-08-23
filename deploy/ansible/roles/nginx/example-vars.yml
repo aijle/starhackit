@@ -31,7 +31,7 @@ nginx_sites:
      - root "/usr/share/nginx/html"
      - index index.html
  foo:
-     - listen 8080
+     - listen 8000
      - server_name localhost
      - root "/tmp/site1"
      - location / { try_files $uri $uri/ /index.html; }
@@ -61,7 +61,7 @@ nginx_configs:
       - proxy_set_header X-Real-IP  $remote_addr
       - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
   upstream:
-      - upstream foo { server 127.0.0.1:8080 weight=10; }
+      - upstream foo { server 127.0.0.1:8000 weight=10; }
   geo:
       - geo $local {
           default 0;

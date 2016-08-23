@@ -10,7 +10,7 @@ var webpackDevConfig = {
         debug: true,
         entry: {
             app: [
-                'webpack-dev-server/client?http://localhost:8080',
+                'webpack-dev-server/client?http://localhost:8000',
                 'webpack/hot/only-dev-server',
                 './src/app/index.js'
             ]
@@ -23,7 +23,7 @@ var webpackDevConfig = {
                 NODE_ENV: JSON.stringify( 'development' )
             }
         } ),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080' })
+        new OpenBrowserPlugin({ url: 'http://localhost:8000' })
     ],
 
     loaders: [

@@ -47,6 +47,12 @@ export default function App() {
   app.server.mountRootRouter();
   app.server.diplayRoutes();
 
+  /**
+   * 1，初始化数据
+   * 2，初始化redis store
+   * 3，初始化服务器
+   * 4，初始化插件
+   */
   let parts = [
     app.data,
     app.store,

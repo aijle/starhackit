@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 let log = require('logfilename')(__filename);
 
 export default function MeApi(app) {
@@ -17,7 +15,7 @@ export default function MeApi(app) {
       validateJson(data, require('./schema/patch.json'));
       log.debug("patch userId %s, data: ", userId, data);
       //TODO refactor with nested data
-      //TODO transaction ?
+      await app.data.sequelize.transaction();
       await models.User.update(data, {
         where: {
           id: userId

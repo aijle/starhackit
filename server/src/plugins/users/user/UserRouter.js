@@ -1,4 +1,5 @@
 import Router from 'koa-66';
+// A querystring parsing and stringifying library with some added security.
 import Qs from 'qs';
 
 let log = require('logfilename')(__filename);

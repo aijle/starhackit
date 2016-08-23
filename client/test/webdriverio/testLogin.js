@@ -7,7 +7,7 @@ describe('Login', function() {
 
   before(async () => {
           client = webdriverio.remote({ desiredCapabilities: {browserName: 'firefox'} });
-          await client.init().url('http://localhost:8080')
+          await client.init().url('http://localhost:8000')
   });
   after(async () => {
     await client.end();
@@ -17,7 +17,7 @@ describe('Login', function() {
     console.log('Title was: ' + title.value);
   });
   it('login', async () => {
-    await client.url('http://localhost:8080/login')
+    await client.url('http://localhost:8000/login')
       .setValue('input[placeholder=Email]', 'alice')
       .setValue('input[type=password]', 'password')
       .click('.btn-signup')

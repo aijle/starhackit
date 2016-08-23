@@ -5,6 +5,9 @@ let fs = require('fs');
 let path = require('path');
 let Sequelize = require('sequelize');
 let log = require('logfilename')(__filename);
+let cls = require('continuation-local-storage');
+let namespace = cls.createNamespace('my-very-own-namespace');
+Sequelize.cls = namespace;
 
 export default function Data(config) {
   let dbConfig = config.db;

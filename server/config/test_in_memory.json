@@ -1,7 +1,7 @@
 {
   "db":{
-    "driver": "sqlite3",
-    "dialect":"sqlite",
+    "driver": "pg",
+    "dialect":"postgres",
     "database": "test",
     "user": "user",
     "password": "",

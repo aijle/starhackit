@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var Promise = require('bluebird');
 var shell = require('shelljs');
+var outputPath = 'build/api/v1/doc';
 
 var configWithDefaultTemplates = raml2html.getDefaultConfig();
 
@@ -14,10 +15,9 @@ var sources = [
 ];
 
 sources = _.map(sources, function(source){
-  return path.join(__dirname, '/../src/plugins', source)
-})
+  return path.join(__dirname, '/../src/plugins', source);
+});
 
-var outputPath = 'build/api/v1/doc';
 shell.mkdir('-p', outputPath);
 
 console.log('sources: ', sources);

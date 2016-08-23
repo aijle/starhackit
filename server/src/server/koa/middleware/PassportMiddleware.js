@@ -22,6 +22,7 @@ export default function PassportMiddleware(app, koaApp/*, config*/){
   });
 
   return {
+    // 是否已经登录
     isAuthenticated(context, next) {
       log.debug("isAuthenticated ", context.request.url);
       if (!context.isAuthenticated()) {
@@ -33,6 +34,7 @@ export default function PassportMiddleware(app, koaApp/*, config*/){
       }
     },
 
+    // 是否有权限
     async isAuthorized(context, next) {
       let request = context.request;
 
