@@ -18,11 +18,11 @@ var webpackDevConfig = {
     },
 
     plugins: [
-        new webpack.DefinePlugin( {
-            'process.env': {
-                NODE_ENV: JSON.stringify( 'development' )
-            }
-        } ),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('development'),
+        }
+      })
         //new OpenBrowserPlugin({ url: 'http://localhost:8000' })
     ],
 

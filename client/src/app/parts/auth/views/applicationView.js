@@ -6,6 +6,7 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './application.styl';
+import config from '../../../config';
 
 const muiTheme = getMuiTheme(baseTheme);
 
@@ -23,7 +24,7 @@ export default(context) => {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div id="application-view">
-        {!window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
+        {!window.devToolsExtension && config.development && <DevTools />}
           <NavBar authenticated={authenticated}/>
           <div id='main-container' className="container">
             {props.children}
