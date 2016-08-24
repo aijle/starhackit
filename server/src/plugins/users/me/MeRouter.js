@@ -17,7 +17,7 @@ export function MeHttpController(app){
   };
 }
 
-export default function MeRouter(app, /*auth*/){
+export default function MeRouter(app){
   let router = new Router();
   let meHttpController = MeHttpController(app);
   router.use(app.server.auth.isAuthenticated);

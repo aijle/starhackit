@@ -3,9 +3,10 @@ import { applyMiddleware, compose, createStore, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger';
 import { routerReducer} from 'react-router-redux';
+import DevTools from './parts/core/components/DevTools';
 
 function devTools(){
-    return  window.devToolsExtension ? window.devToolsExtension() : f => f
+    return  window.devToolsExtension ? window.devToolsExtension() : process.env.NODE_ENV === 'development' && DevTools.instrument();
 }
 
 function logger(){

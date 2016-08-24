@@ -14,7 +14,7 @@ export function TicketHttpController(app){
   };
 }
 
-export default function TicketRouter(app, /*auth*/){
+export default function TicketRouter(app){
   let router = new Router();
   let ticketHttpController = TicketHttpController(app);
   router.get('/', ticketHttpController.getAll);

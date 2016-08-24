@@ -1,0 +1,31 @@
+web:
+  build: ./
+  volumes:
+    - ".:/app"
+  ports:
+    - "9000:9000"
+    - "8000:8000"
+  links:
+    - "rabbitmq"
+    - "postgres"
+    - "redis"
+  command: ./default.sh
+  env_file:
+    - '.env.web'
+
+postgres:
+  image: postgres
+  volumes:
+    - "./data/postgres:/var/lib/postgresql/data"
+  ports:
+    - "5432:5432"
+  env_file:
+    - '.env.web'
+rabbitmq:
+  image: rabbitmq
+  env_file:
+    - '.env.web'
+redis:
+  image: redis
+  env_file:
+    - '.env.web'

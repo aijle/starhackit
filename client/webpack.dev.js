@@ -1,7 +1,7 @@
 /*eslint-env node */
 var path = require( 'path' );
 var webpack = require( 'webpack' );
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+//var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 //var pkg = require('./package.json');
 
 var webpackDevConfig = {
@@ -23,7 +23,7 @@ var webpackDevConfig = {
                 NODE_ENV: JSON.stringify( 'development' )
             }
         } ),
-        new OpenBrowserPlugin({ url: 'http://localhost:8000' })
+        //new OpenBrowserPlugin({ url: 'http://localhost:8000' })
     ],
 
     loaders: [
