@@ -20,15 +20,16 @@ export default(context) => {
       let registerSuccess = _.get(register, 'data.success')
       return (
         <div id="register">
-          <DocTitle title={tr.t("Register")}/> {registerSuccess && this.renderRegisterComplete()}
+          <DocTitle title={tr.t("Register")}/>
+          {registerSuccess && this.renderRegisterComplete()}
           {!registerSuccess && this.renderRegisterForm()}
-
         </div>
       );
     },
     renderRegisterComplete() {
-      //TODO use a Paper
-      return (<Alert type='info' className='registration-request-complete' message={tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.')}/>);
+      return (
+        <Alert type='info' className='registration-request-complete' message={tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.')}/>
+      );
     },
 
     renderRegisterForm() {

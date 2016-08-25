@@ -24,7 +24,7 @@ export default(context) => {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div id="application-view">
-        {!window.devToolsExtension && config.development && <DevTools />}
+        {!window.devToolsExtension && config.env === 'development' && <DevTools />}
           <NavBar authenticated={authenticated}/>
           <div id='main-container' className="container">
             {props.children}

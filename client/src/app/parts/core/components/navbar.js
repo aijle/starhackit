@@ -7,6 +7,8 @@ import config from 'config';
 import Debug from 'debug';
 let debug = new Debug("component:navbar");
 
+debug(config);
+
 function navLinks(authenticated) {
   if (authenticated) {
     return [

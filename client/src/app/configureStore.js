@@ -6,10 +6,6 @@ import { routerReducer} from 'react-router-redux';
 import DevTools from './parts/core/components/DevTools';
 import config from './config';
 
-function devTools(){
-    return  !window.devToolsExtension && config.development && DevTools.instrument();
-}
-
 function logger(){
   return createLogger({});
 }
@@ -40,8 +36,8 @@ export default function configureStore(modules, initialState = {}) {
   const reducers = createReducers(modules);
   const middlewares = createMiddlewares(modules)
   let plugins;
-  if (!window.devToolsExtension && config.development){
-    plugins = compose(applyMiddleware(thunk, ...middlewares, logger()), devTools());
+  if (!window.devToolsExtension && config.env === 'development'){
+    plugins = compose(applyMiddleware(thunk, ...middlewares, logger()), DevTools.instrument());
   }else {
     plugins = applyMiddleware(thunk, ...middlewares, logger());
   }
