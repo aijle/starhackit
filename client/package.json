@@ -18,7 +18,9 @@
     "unit-test-watch": "karma start --auto-watch --no-single-run karma.conf.js",
     "selenium-install": "webdriver-manager update",
     "e2e": "npm run nightwatch",
-    "nightwatch": "cd test/nightwatch/ && nightwatch -e chrome --verbose"
+    "nightwatch": "cd test/nightwatch/ && nightwatch -e chrome --verbose",
+    "docker:build": "npm run build && docker build -t starhackit/ui .",
+    "docker:run": "docker run --rm -p 80:80 -p 443:443  --name starhackit-ui starhackit/ui"
   },
   "repository": {
     "type": "git",
@@ -57,6 +59,7 @@
     "redux": "^3.5.2",
     "redux-act-async": "^0.13.0",
     "redux-logger": "^2.6.1",
+    "redux-saga": "^0.11.0",
     "redux-thunk": "^2.1.0",
     "segmentize": "^0.4.1"
   },

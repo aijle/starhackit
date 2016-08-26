@@ -3,8 +3,11 @@ import { applyMiddleware, compose, createStore, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger';
 import { routerReducer} from 'react-router-redux';
+
 import DevTools from './parts/core/components/DevTools';
 import config from './config';
+
+import createSagaMiddleware from 'redux-saga'
 
 function logger(){
   return createLogger({});
@@ -32,14 +35,24 @@ function createMiddlewares(modules){
   }, []);
 }
 
+function runSagas(sagaMiddleware, parts){
+  _.each(parts, part => {
+    _.each(part.sagas, saga => {
+      sagaMiddleware.run(saga);
+    })
+  })
+}
+
 export default function configureStore(modules, initialState = {}) {
   const reducers = createReducers(modules);
-  const middlewares = createMiddlewares(modules)
+
+  const middlewares = createMiddlewares(modules);
+  const sagaMiddleware = createSagaMiddleware();
   let plugins;
   if (!window.devToolsExtension && config.env === 'development'){
-    plugins = compose(applyMiddleware(thunk, ...middlewares, logger()), DevTools.instrument());
+    plugins = compose(applyMiddleware(thunk, sagaMiddleware, ...middlewares, logger()), DevTools.instrument());
   }else {
-    plugins = applyMiddleware(thunk, ...middlewares, logger());
+    plugins = applyMiddleware(thunk, sagaMiddleware, ...middlewares, logger());
   }
   const store = createStore(
     reducers,
@@ -47,5 +60,6 @@ export default function configureStore(modules, initialState = {}) {
     plugins
   );
 
-  return store
+  runSagas(sagaMiddleware, modules);
+  return store;
 }

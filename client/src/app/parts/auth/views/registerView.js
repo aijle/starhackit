@@ -5,58 +5,55 @@ import DocTitle from 'components/docTitle';
 import mediaSigninButtons from '../components/mediaSigninButtons';
 import registerForm from '../components/registerForm';
 
+import alert from 'components/alert';
+
 export default(context) => {
   const {tr} = context;
   const RegisterForm = registerForm(context);
   const MediaSigninButtons = mediaSigninButtons(context);
-  return React.createClass({
-    propTypes: {
-      register: React.PropTypes.object.isRequired
-    },
 
-    render() {
-      let {register} = this.props;
-      let registerSuccess = _.get(register, 'data.success')
-      return (
-        <div id="register">
-          <DocTitle title={tr.t("Register")}/>
-          {registerSuccess && this.renderRegisterComplete()}
-          {!registerSuccess && this.renderRegisterForm()}
+  const Alert = alert(context);
+
+  function RegisterFormComponent(props) {
+    return (
+      <div>
+        <RegisterForm {...props}/>
+        <div className="strike">
+          <span className="or"></span>
         </div>
-      );
-    },
-    renderRegisterComplete() {
-      return (
+        <div>
+          <MediaSigninButtons/>
+        </div>
+      </div>
+    );
+  }
+
+  function RegisterComplete() {
+    return (<Alert
+      type='info'
+      className='registration-request-complete'
+      message={tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.') }/>
+    );
+  }
+
+  RegisterView.propTypes = {
+    register: React.PropTypes.object.isRequired
+  }
+
+  function RegisterView(props) {
+    let {register} = props;
+    let registerSuccess = _.get(register, 'data.success')
+    return (
+      <div id="register">
+        <DocTitle title={tr.t("Register") }/>
         <Paper className="text-center view">
-          <h2>{tr.t('Register An Account')}</h2>
+          <h2>{tr.t('Register An Account') }</h2>
+          <p>{tr.t('Create a free account') }</p>
 
-          <p>{tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.')}</p>
-
-          <div>
-          </div>
+          {!registerSuccess ? <RegisterFormComponent {...props}/> : <RegisterComplete/>}
         </Paper>
-      );
-    },
-
-    renderRegisterForm() {
-      return (
-        <Paper className="text-center view">
-          <h2>{tr.t('Register An Account')}</h2>
-
-          <p>{tr.t('Create a free account')}</p>
-
-          <div>
-            <RegisterForm {...this.props}/>
-
-            <div className="strike">
-              <span className="or"></span>
-            </div>
-            <div>
-              <MediaSigninButtons/>
-            </div>
-          </div>
-        </Paper>
-      );
-    }
-  });
+      </div>
+    );
+  }
+  return RegisterView;
 }
