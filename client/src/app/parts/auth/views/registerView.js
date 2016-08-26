@@ -28,7 +28,14 @@ export default(context) => {
     },
     renderRegisterComplete() {
       return (
-        <Alert type='info' className='registration-request-complete' message={tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.')}/>
+        <Paper className="text-center view">
+          <h2>{tr.t('Register An Account')}</h2>
+
+          <p>{tr.t('A confirmation email has been sent. Click on the link to verify your email address and activate your account.')}</p>
+
+          <div>
+          </div>
+        </Paper>
       );
     },
 
