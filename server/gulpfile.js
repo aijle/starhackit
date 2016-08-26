@@ -1,14 +1,15 @@
-var path = require( 'path' );
-var gulp = require( 'gulp' );
-var runSequence = require( 'run-sequence' );
-var clean = require( 'gulp-rimraf' );
-var babel = require('gulp-babel');
-var debug = require('gulp-debug');
-var pm2 = require('pm2');
+require('babel-register');
 
-require('babel-core/register');
+const path = require( 'path' );
+const gulp = require( 'gulp' );
+const runSequence = require( 'run-sequence' );
+const clean = require( 'gulp-rimraf' );
+const babel = require('gulp-babel');
+const debug = require('gulp-debug');
+const pm2 = require('pm2');
+const sourcemaps = require('gulp-sourcemaps');
 
-var paths = {
+const paths = {
   src: ['src/**/*.js'],
   test: ['src/**/test*.js'],
   build: 'build'
@@ -28,8 +29,6 @@ gulp.task('build:code', function () {
         .pipe(babel())
         .pipe(gulp.dest(paths.build));
 });
-
-
 
 gulp.task( 'build:production', function ( done ) {
     runSequence(

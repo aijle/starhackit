@@ -1,12 +1,9 @@
 {
-  "stage": 1,
-  "optional": ["runtime"],
+  "presets": ["es2015","stage-0"],
   "plugins": [
-      "babel-root-import"
-  ],
-  "extra": {
-    "babel-root-import":{
+    ["babel-root-import", {
       "root": "build"
-    }
-  }
+    }],
+    ["transform-runtime"]
+  ]
 }

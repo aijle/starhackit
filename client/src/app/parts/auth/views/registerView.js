@@ -4,7 +4,6 @@ import Paper from 'material-ui/Paper';
 import DocTitle from 'components/docTitle';
 import mediaSigninButtons from '../components/mediaSigninButtons';
 import registerForm from '../components/registerForm';
-import Alert from 'components/alert';
 
 export default(context) => {
   const {tr} = context;

@@ -14,7 +14,7 @@ export default function Plugins(app){
     fs.readdirSync(pluginPath)
       .filter( file => file.slice(-9) === 'Plugin.js')
       .forEach(file => {
-        plugins[name] = require(path.join(pluginPath, file))(app);
+        plugins[name] = require(path.join(pluginPath, file)).default(app);
       });
   }
 

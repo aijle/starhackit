@@ -4,6 +4,10 @@ let Promise = require('bluebird');
 import Koa from'koa';
 // Router for koa v2
 import Router from 'koa-66';
+import PassportMiddleware from './middleware/PassportMiddleware';
+import SessionMiddlware from './middleware/SessionMiddlware';
+import LoggerMiddleware from './middleware/LoggerMiddleware';
+import StaticMiddleware from './middleware/StaticMiddleware';
 
 let log = require('logfilename')(__filename);
 
@@ -18,7 +22,7 @@ export default function(app) {
 
   return {
     koa: koaApp,
-    auth: require('./middleware/PassportMiddleware')(app, koaApp, config),
+    auth: PassportMiddleware(app, koaApp, config),
     baseRouter(){
       return baseRouter;
     },
@@ -76,15 +80,15 @@ function middlewareInit(app, koaApp, configParam) {
   log.debug("middlewareInit");
 
   // SessionMiddlware
-  require('./middleware/SessionMiddlware')(app, koaApp, configParam);
+  SessionMiddlware(app, koaApp, configParam);
 
   // a body parser for koa, base on co-body
   const bodyParser = require('koa-bodyparser');
   koaApp.use(bodyParser());
 
   //LoggerMiddlware
-  require('./middleware/LoggerMiddleware')(app, koaApp, configParam);
+  LoggerMiddleware(app, koaApp, configParam);
 
   //Serve static html files such as the generated api documentation.
-  require('./middleware/StaticMiddleware')(app, koaApp, configParam);
+  StaticMiddleware(app, koaApp, configParam);
 }
