@@ -18,7 +18,7 @@
     "unit-test-watch": "karma start --auto-watch --no-single-run karma.conf.js",
     "selenium-install": "webdriver-manager update",
     "e2e": "npm run nightwatch",
-    "nightwatch": "cd test/nightwatch/ && nightwatch"
+    "nightwatch": "cd test/nightwatch/ && nightwatch -e chrome --verbose"
   },
   "repository": {
     "type": "git",

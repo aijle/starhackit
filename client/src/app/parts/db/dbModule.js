@@ -4,6 +4,7 @@ import {createAction} from 'redux-act';
 import {createActionAsync, createReducerAsync} from 'redux-act-async';
 import {connect} from 'react-redux';
 import SchemaView from './SchemaView';
+import common from '../common';
 
 function Resources(rest){
   return {
@@ -62,14 +63,5 @@ function Middleware(actions){
 }
 
 export default function(context, rest) {
-  let resources = Resources(rest)
-  let actions = Actions(rest);
-  let containers = Containers(context, actions, resources)
-  return {
-      actions,
-      reducers: Reducers(actions),
-      containers,
-      routes: (store) => Routes(containers, store, actions),
-      middlewares: [Middleware(actions)]
-  }
+  return common(Resources, Actions, Containers, Reducers, Routes, Middleware, context, rest);
 }

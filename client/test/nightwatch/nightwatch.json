@@ -21,8 +21,7 @@
     "host" : "127.0.0.1",
     "port" : 4444,
     "cli_args" : {
-      "webdriver.chrome.driver" : "",
-      "webdriver.ie.driver" : ""
+      "webdriver.chrome.driver" : "../../node_modules/protractor/node_modules/webdriver-manager/selenium/chromedriver_2.22"
     }
   },
 
@@ -37,7 +36,7 @@
         "path" : ""
       },
       "desiredCapabilities": {
-        "browserName": "firefox",
+        "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
       }
@@ -47,7 +46,12 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        "chromeOptions" : {
+          "args" : ["start-fullscreen"],
+          "binary": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          "extensions": []
+        }
       }
     }
   }
