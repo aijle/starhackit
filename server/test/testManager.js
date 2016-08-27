@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import {Client} from 'restauth';
 
-let App = require('../src/app');
+let App = require('../src/app').default;
 
 let log = require('logfilename')(__filename);
 

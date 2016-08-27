@@ -17,7 +17,7 @@ export default function DbSchemaPlugin(app){
           context.status = 200;
           context.body = schema;
         } catch(error){
-          log.error("getSchema ", error);
+          log.error("getSchema ", error.stack || error.stacktrace || error);
           context.body = error;
         }
 

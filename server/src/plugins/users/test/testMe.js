@@ -48,7 +48,8 @@ describe('Users', function() {
     });
     it('should patch user', async () => {
       let data = {
-        username: "Ciccio"
+        username: "Ciccio",
+        biography: "My biography"
       };
       await client.patch('v1/me', data);
       //assert(me);

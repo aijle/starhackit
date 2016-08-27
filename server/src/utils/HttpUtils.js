@@ -25,21 +25,21 @@ function buildError(error){
 
 export function convertAndRespond(context, error) {
   if (error instanceof TypeError) {
-    log.error('TypeError: ', error.toString());
-    log.error('TypeError stack: ', error.stack);
+    log.error('TypeError: ', error.stack || error.stacktrace || error);
+    // log.error('TypeError stack: ', error.stack);
     context.status = 500;
     context.body = buildError({
       name: error.name,
       message: error.message
     });
   } else if (!error.name) {
-    log.error('UnknownError:', error);
+    log.error('UnknownError:', error.stack || error.stacktrace || error);
     context.status = 500;
     context.body = buildError({
         name: 'UnknownError'
     });
   } else {
-    log.warn('error name', error);
+    log.warn('error name', error.stack || error.stacktrace || error);
     let code = _.isNumber(error.code) ? error.code: 400;
     context.status = code;
     context.body = buildError(error);

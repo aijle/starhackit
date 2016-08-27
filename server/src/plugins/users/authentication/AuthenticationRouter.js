@@ -21,7 +21,7 @@ export function AuthenticationHttpController(app, publisherUser){
           };
           ctx.login(user, error => {
             if(error){
-              log.error("login ", error);
+              log.error("login ", error.stack || error.stacktrace || error);
               throw error;
             } else {
               log.debug("login ok ");

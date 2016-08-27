@@ -23,7 +23,7 @@ export default function MailJob (config){
         await subscriber.start(this._onIncomingMessage.bind(this));
         log.info('started');
       } catch(error){
-        log.error(`cannot start: ${error}, is RabbitMq running ?`);
+        log.error(`cannot start: ${error.stack || error.stacktrace || error}, is RabbitMq running ?`);
       }
     },
 
@@ -88,7 +88,7 @@ export default function MailJob (config){
       return new Promise( (resolve, reject) => {
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
-              log.error("cannot send mail: ", error);
+              log.error("cannot send mail: ", error.stack || error.stacktrace || error);
               reject(error);
             } else {
               delete info.html;
@@ -123,7 +123,7 @@ export default function MailJob (config){
         log.info("email sent");
         subscriber.ack(message);
       } catch (error) {
-        log.error("error sending mail: ", error);
+        log.error("error sending mail: ", error.stack || error.stacktrace || error);
         // TODO nack or ack ?
         subscriber.ack(message);
         return;

@@ -119,28 +119,20 @@ module.exports = function(sequelize, DataTypes) {
          */
         createUserInGroups: async function(userJson, groups) {
           log.info("createUserInGroups user:%s, group: ", userJson, groups);
-          return sequelize.transaction(async function(t) {
-            let userCreated = await models.User.create(userJson, {transaction: t});
-            const userId = userCreated.get().id;
-            await models.UserGroup.addUserIdInGroups(groups, userId, t );
-            //Create the profile
-            let profile = await models.Profile.create(
-              {...userJson.profile, user_id: userId},
-              {transaction: t});
-            log.debug("profile created ", profile.get());
-            //Create the eventual authentication provider
-            if(userJson.authProvider){
-              await models.AuthProvider.create(
-                {...userJson.authProvider, user_id: userId},
-                {transaction: t});
-            }
+          let userCreated = await models.User.create(userJson);
+          const userId = userCreated.get().id;
+          await models.UserGroup.addUserIdInGroups(groups, userId);
+          //Create the profile
+          let profile = await models.Profile.create(
+            {...userJson.profile, user_id: userId});
+          log.debug("profile created ", profile.get());
+          //Create the eventual authentication provider
+          if(userJson.authProvider){
+            await models.AuthProvider.create(
+              {...userJson.authProvider, user_id: userId});
+          }
 
-            return userCreated;
-          })
-          .catch(function (err) {
-            log.error('createUserInGroups: rolling back', err);
-            throw err;
-          });
+          return userCreated;
         },
         /**
          * Checks whether a user is able to perform an action on a resource
@@ -172,6 +164,21 @@ module.exports = function(sequelize, DataTypes) {
                 id: userId
               }
           });
+          // let test = await this.find({
+          //   include: [
+          //             {
+          //             model: models.Group,
+          //             include:[
+          //               {
+          //                model: models.Permission
+          //                }]
+          //             }],
+          //   where: {
+          //       id: userId
+          //     },
+          //   raw: true
+          // });
+          // console.log(test);
           let authorized = res ? true: false;
           return authorized;
         },

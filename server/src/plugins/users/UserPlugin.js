@@ -43,7 +43,7 @@ export default function UserPlugin(app){
           await part.start(app);
         };
       } catch(error){
-        log.error(`cannot start: ${error}`);
+        log.error(`cannot start: ${error.stack || error.stacktrace || error}`);
       }
     },
 

@@ -1,11 +1,10 @@
 {
   "db":{
-    "driver": "pg",
-    "dialect":"postgres",
-    "database": "test",
+    "driver": "sqlite3",
+    "dialect":"sqlite",
+    "database": "db_test",
     "user": "user",
     "password": "",
-    "logging": true,
-    "storage": "./db.test.sqlite"
+    "logging": false
   }
 }

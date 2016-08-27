@@ -1,8 +1,10 @@
 import assert from 'assert';
 import testMngr from '~/test/testManager';
+import UserApi from '../user/UserApi';
 
 describe('Users', function() {
   let client;
+  let userApi;
 
   before(async () => {
       await testMngr.start();
@@ -17,7 +19,10 @@ describe('Users', function() {
       assert(client);
       let res = await client.login();
       assert(res);
+      userApi = UserApi(testMngr.app);
+      assert(userApi);
     });
+
     it('should get all users', async () => {
       let users = await client.get('v1/users');
       assert(users);
@@ -42,13 +47,15 @@ describe('Users', function() {
     });
     it('should get all users with filter ASC', async () => {
       let res = await client.get('v1/users?offset=1&order=ASC&limit=10');
-      assert.equal(res.data.length, 10);
+      let users = await userApi.getAll({ offset:1, order:'ASC', limit:10 });
+      assert.equal(res.data.length, users.data.length);
       //console.log(res.data[0])
       assert(res.data[0].id);
     });
     it('should get all users with filter DESC', async () => {
       let res = await client.get('v1/users?offset=10&limit=10');
-      assert.equal(res.data.length, 10);
+      let users = await userApi.getAll({ offset:10, limit:10 });
+      assert.equal(res.data.length, users.data.length);
     });
 
     it.skip('should not create a new user with missing username', async () => {

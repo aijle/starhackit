@@ -83,7 +83,7 @@ describe('PasswordReset', function () {
   it.skip('reset password email', async() => {
 
   });
-  it('reset passord with malformed email', async(done) => {
+  it('reset passord with malformed email', async() => {
     let data = {
       email: "alic"
     };
@@ -94,8 +94,6 @@ describe('PasswordReset', function () {
     } catch(res){
       assert.equal(res.statusCode, 400);
       console.log(res.body);
-      //assert.equal(res.body.name, '');
-      done();
     }
   });
   it('verify with wrong token', async() => {

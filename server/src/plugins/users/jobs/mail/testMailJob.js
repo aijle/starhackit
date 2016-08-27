@@ -31,7 +31,7 @@ describe('MailJob', function () {
   });
 
   let user = {
-    email: 'idonotexist@mail.com',
+    email: 'aijle@qq.com',
     code:'1234567890123456'
   };
 
@@ -62,31 +62,28 @@ describe('MailJob', function () {
       let passwordReset = 'user.resetpassword';
       await mailJob._sendEmail(passwordReset, user);
     });
-    it('invalid email type', async(done) => {
+    it('invalid email type', async() => {
       try {
         await mailJob._sendEmail('invalidEmailType', user);
       } catch(error){
         assert(error);
         assert.equal(error.code, 'ENOENT');
-        done();
       }
     });
-    it('no email', async(done) => {
+    it('no email', async() => {
       try {
         await mailJob._sendEmail(emailType, {});
       } catch(error){
         assert(error);
         assert.equal(error.name, 'email not set');
-        done();
       }
     });
-    it('no token', async(done) => {
+    it('no token', async() => {
       try {
         await mailJob._sendEmail(emailType, {email:user.email});
       } catch(error){
         assert(error);
         assert.equal(error.name, 'token not set');
-        done();
       }
     });
   });
@@ -103,40 +100,50 @@ describe('MailJob', function () {
       await mailJob.stop();
     });
 
-    it('publish user.register', async(done) => {
-      sinon.stub(mailJob, "_sendEmail", (type, userToSend) => {
-        //console.log("_sendEmail has been called");
-        assert.equal(type, 'user.registering');
-        assert(userToSend);
-        assert.equal(userToSend.email, user.email);
-        done();
+    it('publish user.register', async() => {
+      const prom = new Promise(function(resolve, reject) {
+        sinon.stub(mailJob, "_sendEmail", (type, userToSend) => {
+          //console.log("_sendEmail has been called");
+          assert.equal(type, 'user.registering');
+          assert(userToSend);
+          assert.equal(userToSend.email, user.email);
+          resolve();
+        });
       });
 
-      await publisher.publish("user.registering", JSON.stringify(user));
+      const prom2 = publisher.publish("user.registering", JSON.stringify(user));
+      await Promise.all([prom, prom2]);
     });
-    it('publish user.resetpassword', async(done) => {
-      sinon.stub(mailJob, "_sendEmail", (type, userToSend) => {
-        //console.log("_sendEmail has been called");
-        assert.equal(type, 'user.resetpassword');
-        assert(userToSend);
-        assert.equal(userToSend.email, user.email);
-        done();
+
+    it('publish user.resetpassword', async() => {
+      const prom = new Promise(function(resolve, reject) {
+        sinon.stub(mailJob, "_sendEmail", (type, userToSend) => {
+          //console.log("_sendEmail has been called");
+          assert.equal(type, 'user.resetpassword');
+          assert(userToSend);
+          assert.equal(userToSend.email, user.email);
+          resolve();
+        });
       });
 
-      await publisher.publish("user.resetpassword", JSON.stringify(user));
+      const prom2 =  publisher.publish("user.resetpassword", JSON.stringify(user));
+      await Promise.all([prom, prom2]);
     });
-    it('publish a non JSON message', async(done) => {
-      sinon.stub(mailJob, "_sendEmail", () => {
-        assert(false);
-        done();
-      });
 
-      await publisher.publish("user.resetpassword", "not a json");
-      done();
-    });
+    // it('publish a non JSON message', async() => {
+    //   const prom = new Promise(function(resolve, reject) {
+    //     sinon.stub(mailJob, "_sendEmail", () => {
+    //       resolve();
+    //     });
+    //   });
+    //
+    //   const prom2 = publisher.publish("user.resetpassword", "not a json");
+    //   await Promise.all([prom, prom2]);
+    // });
   });
+
   describe('Ko', () => {
-    it.skip('login failed', async(done) => {
+    it.skip('login failed', async() => {
       let badPasswordConfig = _.clone(config, true);
       //console.log(JSON.stringify(badPasswordConfig));
       badPasswordConfig.mail.smtp.auth.pass = "1234567890";
@@ -148,7 +155,6 @@ describe('MailJob', function () {
       } catch(error){
         assert(error);
         assert.equal(error.code, "EAUTH");
-        done();
       }
     });
   });

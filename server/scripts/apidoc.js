@@ -31,7 +31,7 @@ Promise.all(_.map(sources, function(source){
     fs.writeFileSync(resultFilename, result);
   }, function(error) {
     // Output error
-    console.error(error);
+    console.error(error.stack || error.stacktrace || error);
     throw error;
   });
 }))

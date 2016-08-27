@@ -6,7 +6,7 @@ import UserUtils from './userUtils';
 
 describe('UserRegister', function() {
   let app = testMngr.app;
-  this.timeout(300e3);
+  this.timeout(30e3);
   let models = app.data.models();
   let client;
   let sandbox;
@@ -84,13 +84,12 @@ describe('UserRegister', function() {
     assert(loginRes);
     //console.log(loginRes);
   });
-  it('invalid email code', async (done) => {
+  it('invalid email code', async () => {
     try {
       await client.post('v1/auth/verify_email_code', {code: "1234567890123456"});
     } catch(error){
       assert.equal(error.statusCode, 422);
       assert.equal(error.body.error.name, "NoSuchCode");
-      done();
     }
   });
   it('malformed email code', async () => {

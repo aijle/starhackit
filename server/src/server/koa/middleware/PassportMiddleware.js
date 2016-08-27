@@ -59,7 +59,7 @@ export default function PassportMiddleware(app, koaApp/*, config*/){
           context.status = 401;
         }
       } catch(error){
-          log.error("isAuthorized: ", error);
+          log.error("isAuthorized: ", error.stack || error.stacktrace || error);
       }
     }
   };

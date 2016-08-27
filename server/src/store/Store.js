@@ -14,7 +14,7 @@ export default function(config = {}) {
         if(config.redis){
           client = redis.createClient(config.redis);
           client.on("error", (err) => {
-              log.error("Error " + err);
+              log.error("Error " + (err.stack || err.stacktrace || err));
               reject(err);
           });
           client.on("ready", () => {

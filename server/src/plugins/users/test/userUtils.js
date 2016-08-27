@@ -11,7 +11,7 @@ export default function () {
             let userConfig = await this.registerRandom(models, client);
             next(null, userConfig);
           } catch(err){
-            console.error("error creating user: ", err)
+            console.error("error creating user: ", err.stack || err.stacktrace || err.body || err);
             next(err);
           }
         }, function (err, results) {

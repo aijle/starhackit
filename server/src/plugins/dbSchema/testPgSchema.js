@@ -17,12 +17,14 @@ describe('Users', function() {
       await client.login();
     });
     it('get db schema', async () => {
-      let schema = await client.get('v1/db/schema');
-      console.log("got response", JSON.stringify(schema, null, 4));
-      assert(schema);
-      assert(schema.tables);
-      assert(schema.constraints);
-      assert(schema.sequences);
+      if (testMngr.app.data.sequelize.getDialect() === 'postgres'){
+        let schema = await client.get('v1/db/schema');
+        console.log("got response", JSON.stringify(schema, null, 4));
+        assert(schema);
+        assert(schema.tables);
+        assert(schema.constraints);
+        assert(schema.sequences);
+      }
     });
   });
 });

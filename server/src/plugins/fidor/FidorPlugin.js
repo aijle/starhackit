@@ -51,7 +51,7 @@ export default function fidorPlugin(app){
         context.status = 200;
       }
     } catch(error){
-      log.error('redirectApi error: ', error);
+      log.error('redirectApi error: ', error.stack || error.stacktrace || error);
       context.status = 503;
     }
     log.debug('redirectApi done');
