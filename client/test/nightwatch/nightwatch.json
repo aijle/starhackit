@@ -15,7 +15,7 @@
     }
   },
   "selenium" : {
-    "start_process" : false,
+    "start_process" : true,
     "server_path" : "../../node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-2.53.1.jar",
     "log_path" : "",
     "host" : "127.0.0.1",
@@ -30,7 +30,7 @@
       "launch_url" : "http://localhost:8000",
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
-      "silent": false,
+      "silent": true,
       "screenshots" : {
         "enabled" : false,
         "on_failure" : true,
