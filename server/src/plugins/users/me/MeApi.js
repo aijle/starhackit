@@ -15,22 +15,21 @@ export default function MeApi(app) {
       validateJson(data, require('./schema/patch.json'));
       log.debug("patch userId %s, data: ", userId, data);
       //TODO refactor with nested data
-      let updatedUser;
       await app.data.sequelize.transaction(async t => {
         await models.User.update(data, {
           where: {
             id: userId
           }
-        });
+        }, { transaction: t });
         //TODO upsert ?
         await models.Profile.update(data, {
           where: {
             user_id: userId
           }
-        });
+        }, { transaction: t });
         log.debug("patch done");
-        updatedUser = await this.getByUserId(userId);
       });
+      let updatedUser = await this.getByUserId(userId);
       return updatedUser;
     }
   };

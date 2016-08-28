@@ -61,12 +61,12 @@ export default function(app, publisherUser) {
         let userToCreate = _.pick(userPending, 'username', 'email', 'passwordHash');
         let user;
         await app.data.sequelize.transaction(async t => {
-          user = await models.User.createUserInGroups(userToCreate, ["User"]);
+          user = await models.User.createUserInGroups(userToCreate, ["User"], { transaction: t });
           await models.UserPending.destroy({
             where:{
               code:param.code
             }
-          });
+          }, { transaction: t });
           //log.debug("verifyEmailCode: created user ", user.toJSON());
           await publisherUser.publish("user.registered", JSON.stringify(user.toJSON()));
         });

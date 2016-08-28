@@ -24,10 +24,10 @@ module.exports = function(sequelize, DataTypes) {
     * @param {String} userId   -   userId to be added to the group   *
     * @returns {Promise} returns a  Promise containing the results of the upsert
     */
-   async function addUserIdInGroups(groups, userId) {
+   async function addUserIdInGroups(groups, userId, options) {
      log.debug(`addUserIdInGroups user:${userId}, #groups ${groups.length}`);
      for (let group of groups) {
-       await UserGroup.addUserIdInGroup(group, userId);
+       await UserGroup.addUserIdInGroup(group, userId, options);
      }
    }
    /**
@@ -36,12 +36,12 @@ module.exports = function(sequelize, DataTypes) {
     * @param {String} userId   -   userId to be added to the group   *
     * @returns {Promise} returns a  Promise containing the results of the upsert
     */
-   async function addUserIdInGroup(groupName, userId) {
+   async function addUserIdInGroup(groupName, userId, options) {
      log.debug(`addUserIdInGroup user:${userId}, group: ${groupName}`);
      //let group = await models.Group.findByName(groupName);
      let group = await models.Group.find({
        where: { name: groupName }
-     });
+     }, options);
      if (!group) {
        let err = {name: 'GroupNotFound', message: groupName};
        throw err;
@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
      group = await UserGroup.upsert({
        group_id: group.get().id,
        user_id: userId
-     });
+     }, options);
      return group;
    }
 

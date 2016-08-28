@@ -117,19 +117,19 @@ module.exports = function(sequelize, DataTypes) {
          *
          * @returns {Promise}  Promise user created model
          */
-        createUserInGroups: async function(userJson, groups) {
+        createUserInGroups: async function(userJson, groups, options) {
           log.info("createUserInGroups user:%s, group: ", userJson, groups);
-          let userCreated = await models.User.create(userJson);
+          let userCreated = await models.User.create(userJson, options);
           const userId = userCreated.get().id;
-          await models.UserGroup.addUserIdInGroups(groups, userId);
+          await models.UserGroup.addUserIdInGroups(groups, userId, options);
           //Create the profile
           let profile = await models.Profile.create(
-            {...userJson.profile, user_id: userId});
+            {...userJson.profile, user_id: userId}, options);
           log.debug("profile created ", profile.get());
           //Create the eventual authentication provider
           if(userJson.authProvider){
             await models.AuthProvider.create(
-              {...userJson.authProvider, user_id: userId});
+              {...userJson.authProvider, user_id: userId}, options);
           }
 
           return userCreated;
