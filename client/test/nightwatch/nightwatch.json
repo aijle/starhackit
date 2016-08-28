@@ -15,7 +15,7 @@
     }
   },
   "selenium" : {
-    "start_process" : true,
+    "start_process" : false,
     "server_path" : "../../node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-2.53.1.jar",
     "log_path" : "",
     "host" : "127.0.0.1",
@@ -30,13 +30,15 @@
       "launch_url" : "http://localhost:8000",
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
-      "silent": true,
+      "silent": false,
       "screenshots" : {
         "enabled" : false,
+        "on_failure" : true,
+        "on_error" : false,
         "path" : ""
       },
       "desiredCapabilities": {
-        "browserName": "chrome",
+        "browserName": "firefox",
         "javascriptEnabled": true,
         "acceptSslCerts": true
       }
@@ -46,12 +48,7 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true,
-        "chromeOptions" : {
-          "args" : ["start-fullscreen"],
-          "binary": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-          "extensions": []
-        }
+        "acceptSslCerts": true
       }
     }
   }

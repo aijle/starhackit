@@ -44,7 +44,7 @@
     */
   },
   "mail": {
-    "from": "aijletest <aijletest@163.com>",
+    "from": "no reply<aijletest@163.com>",
     "signature": "Aijle Test",
     "smtp": {
       "host": "smtp.163.com",

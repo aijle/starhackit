@@ -6,7 +6,7 @@ import UserUtils from './userUtils';
 
 describe('UserRegister', function() {
   let app = testMngr.app;
-  this.timeout(30e3);
+  this.timeout(300e3);
   let models = app.data.models();
   let client;
   let sandbox;
