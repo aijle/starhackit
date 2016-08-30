@@ -26,7 +26,7 @@ Promise.all(_.map(sources, function(source){
   return raml2html.render(source, configWithDefaultTemplates).then(function(result) {
     //console.log('raml2html result: ', result);
     var outputFile = path.basename(source, '.raml');
-    let resultFilename = path.join(outputPath, outputFile + ".html");
+    var resultFilename = path.join(outputPath, outputFile + ".html");
     console.log('raml2html writing to file: ', resultFilename);
     fs.writeFileSync(resultFilename, result);
   }, function(error) {
