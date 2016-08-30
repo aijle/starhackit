@@ -19,11 +19,8 @@ addons:
       - g++-4.8
 
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database dev;' -U postgres
 
 after_script:
-  - cd client
-  - npm run build
-  - npm test
-  - cd ../server
-  - npm test
+  - cd client && npm run build && npm test
+  - cd ../server && npm run codeclimate && npm run coveralls
